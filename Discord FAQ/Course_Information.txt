@@ -12,9 +12,9 @@ DSC 384 ??? - Course not yet implemented
 DSC 385 ??? - Course not yet implemented
 DSC 388G ALG - Course not yet implemented for MSDS
 DSC 391L ML - Python
-DSC 395T DL - <Does anyone know?>
+DSC 395T DL - Python
 DSC 395T DSA - Course not yet implemented
-DSC 395T NLP - <Does anyone know?>
+DSC 395T NLP - Python
 DSC 395T OPT - Course not yet implemented for MSDS
 ```
 
