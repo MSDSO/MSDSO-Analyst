@@ -1,0 +1,50 @@
+MSDSO: edit 851535255080271951 860203213809778749 "**__Course Related Information__**
+
+```fix
+What language is used in XYZ course?
+```
+> This is subject to change, but R and Python have been the languages of choice so far:
+```
+DSC 381 PRB - R samples offered, but no programming needed/submitted
+DSC 382 RGR - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
+DSC 383 ??? - Course not yet implemented
+DSC 384 ??? - Course not yet implemented
+DSC 385 ??? - Course not yet implemented
+DSC 388G ALG - Course not yet implemented for MSDS
+DSC 391L ML - Python
+DSC 395T DL - <Does anyone know?>
+DSC 395T DSA - Course not yet implemented
+DSC 395T NLP - <Does anyone know?>
+DSC 395T OPT - Course not yet implemented for MSDS
+```
+
+```fix
+I heard course XYZ utilizes peer grading?  Is that true?
+```
+> Some courses do. The logistics of peer grading vary.  Refer to the course syllabus for the most current details
+```
+DSC 381 PRB - No, but the grading system is unique.  Pay close attention to the instructions. Refer to the syllabus and/or Piazza
+DSC 382 REG - Some of the HW is peer reviewed, though graded on answers rather than code.
+DSC 383 ??? - TBD
+DSC 384 ??? - TBD
+DSC 385 ??? - TBD
+DSC 388G ALG - TBD
+DSC 391L ML - All assignments are peer reviewed.
+DSC 395T DL - <Does anyone know?>
+DSC 395T DSA - TBD
+DSC 395T NLP - <Does anyone know?>
+DSC 395T OPT - TBD
+```
+
+```fix
+Which classes are good to take first?  What about prerequisites?
+```
+> Depends on background and workload. See the course flow from the program coordinator. Prerequisites have not been strictly enforced.
+
+
+```fix
+What are people's impressions of XYZ course?
+```
+> Look at the reviews on https://www.msdshub.com/ to see what former students have said about the course. Please contribute to the reviews as well after you've finished taking the courses to help future students.
+
+------------------------------------------"

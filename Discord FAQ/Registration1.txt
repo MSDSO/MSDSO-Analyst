@@ -1,0 +1,36 @@
+MSDSO: edit 851535255080271951 855846427703377930 "
+**__Registration and Student Information__**
+
+```fix
+How do I check/remove XYZ bar?
+```
+> Check your bars by visiting https://utdirect.utexas.edu/registrar/ris.WBX
+> From Graduate Coordinator (msdsgradcoordinator@utexas.edu):
+```
+- If you see a Dean of Students bar, please update your emergency contact information as soon as possible.
+- If you see an international bar, go to this link https://global.utexas.edu/isss/myio. If this doesn’t work, send an email to hotline@austin.utexas.edu.
+- If you see a medical bar, contact me as soon as possible.
+- If you see an advising bar, contact me as soon as possible.
+```
+
+```fix
+How do I register for classes?
+```
+> You will receive an e-mail from the program coordinator (msdsgradcoordinator@utexas.edu) with a form to complete for registration. The coordinator will register you for the classes that you selected.
+
+
+```fix
+Where do I pay for my classes?
+```
+> When it is time to pay, you will receive an e-mail from the program coordinator (msdsgradcoordinator@utexas.edu).  Along with payment, you will also need to visit the 'My Tuition Bill' page to Confirm Attendance.
+> Unless policy changes, do not pay any balance shown on the 'My Tuition Bill' page.  These are paid by the program out of the $1000.  Instead, your payments should be directed through the 'What I Owe' page.
+> - My Tuition Bill: https://utdirect.utexas.edu/acct/fb/my_tuition/my_tuition_home.WBX
+> - What I Owe: https://utdirect.utexas.edu/acct/rec/wio/wio_home.WBX
+
+
+```fix
+Where can I get an unofficial transcript/record?
+```
+> https://onestop.utexas.edu/student-records/transcripts-other-records/unofficial-records/
+"
+
