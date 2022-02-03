@@ -1,12 +1,18 @@
 # system library
 import os
 import re
-# discord.py librbary
-import discord
-from discord.ext import commands
+
+# discord.py library - no longer maintained. Swapping to disnake library
+# import discord
+# from discord.ext import commands
 # util library
+
 from datetime import datetime
 from socket import gethostname
+
+# disnake library
+import disnake
+from disnake.ext import commands
 
 bot = commands.Bot(command_prefix="MSDSO: ")
 
@@ -27,8 +33,8 @@ async def status(ctx):
 
 @commands.check_any(commands.is_owner(), commands.has_any_role(administrator_role_id, moderator_role_id))
 @bot.command()
-async def purge(ctx, amout: int):
-    await ctx.channel.purge(limit=(amout+1))
+async def purge(ctx, amount: int):
+    await ctx.channel.purge(limit=(amount+1))
 
 @commands.check_any(commands.is_owner(), commands.has_any_role(administrator_role_id, moderator_role_id))
 @bot.command()
@@ -38,12 +44,13 @@ async def shutdown(ctx):
 
 @commands.check_any(commands.is_owner(), commands.has_any_role(administrator_role_id, moderator_role_id))
 @bot.command()
-async def assign(ctx, user: discord.User, role_name, *args):
+
+async def assign(ctx, user: disnake.User, role_name, *args): # update for disnake package
     if len(args) > 0:
         await ctx.channel.send("usage: ``MSDSO: assign [-@user] [-role]``")
     else:
         guild = ctx.guild
-        role = discord.utils.get(guild.roles, name=role_name)
+        role = disnake.utils.get(guild.roles, name=role_name) # update for disnake package
         if role == None:
             await ctx.channel.send(f"error: role ``{role}`` is not valid.")
             return
