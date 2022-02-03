@@ -1,0 +1,40 @@
+# folders
+.idea/
+__pycache__/
+Datasets/
+Draft/
+private/
+
+# Notes
+changelog.txt
+
+# Testing notebooks
+*.ipynb
+
+# Environments
+# .env
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+pythonenv*
+
+# files
+key
+
+# operating system-related files
+# file properties cache/storage on macOS
+*.DS_Store
+
+# thumbnail cache on Windows
+Thumbs.db
+
+# Folder config file
+[Dd]esktop.ini
+config.py
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/

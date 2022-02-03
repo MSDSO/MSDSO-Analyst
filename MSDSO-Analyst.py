@@ -24,6 +24,11 @@ bots_command_channel_id = "802306009506906132"
 administrator_role_id = 807796843190419498
 moderator_role_id = 773282500734484490
 
+# Login notification
+@bot.event
+async def on_ready():
+    print(f"Logged in as {bot.user}: ID: {bot.user.id})")
+
 @commands.check_any(commands.is_owner(), commands.has_any_role(administrator_role_id, moderator_role_id))
 @bot.command()
 async def status(ctx):
@@ -145,7 +150,5 @@ async def on_raw_reaction_remove(payload):
         await member.remove_roles(role)
 
 # server OAuth2 key
-key_file = open("key", 'r')
-key = key_file.readline()
-bot.run(key)
-key_file.close()
+from private.config import TOKEN 
+bot.run(TOKEN)
