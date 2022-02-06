@@ -6,15 +6,16 @@ What language is used in XYZ course?
 > This is subject to change, but R and Python have been the languages of choice so far:
 ```
 DSC 381 PRB - R samples offered, but no programming needed/submitted
-DSC 382 RGR - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
+DSC 382 RGR - See (1) below
 DSC 383 PRED - Primarily R-based, but may use others if viable.
-DSC 384 DPCI - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
+DSC 384 DPCI - See (1) below
 DSC 385 VIZ - R
 DSC 391L ML - Python
 DSC 395T DL - Python
 DSC 395T DSA - Python
 DSC 395T NLP - Python
 DSC 395T OPT - No programming assignments
+(1) - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
 ```
 
 ```fix
