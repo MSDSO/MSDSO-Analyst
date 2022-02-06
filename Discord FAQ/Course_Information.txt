@@ -7,15 +7,14 @@ What language is used in XYZ course?
 ```
 DSC 381 PRB - R samples offered, but no programming needed/submitted
 DSC 382 RGR - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
-DSC 383 ??? - Course not yet implemented
-DSC 384 ??? - Course not yet implemented
-DSC 385 ??? - Course not yet implemented
-DSC 388G ALG - Course not yet implemented for MSDS
+DSC 383 PRED - R for first half; Python for second half
+DSC 384 DPCI - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
+DSC 385 VIZ - R
 DSC 391L ML - Python
 DSC 395T DL - Python
-DSC 395T DSA - Course not yet implemented
+DSC 395T DSA - Python
 DSC 395T NLP - Python
-DSC 395T OPT - Course not yet implemented for MSDS
+DSC 395T OPT - No programming assignments
 ```
 
 ```fix
@@ -25,15 +24,14 @@ I heard course XYZ utilizes peer grading?  Is that true?
 ```
 DSC 381 PRB - No, but the grading system is unique.  Pay close attention to the instructions. Refer to the syllabus and/or Piazza
 DSC 382 REG - Some of the HW is peer reviewed, though graded on answers rather than code.
-DSC 383 ??? - TBD
-DSC 384 ??? - TBD
-DSC 385 ??? - TBD
-DSC 388G ALG - TBD
+DSC 383 PRED - Yes
+DSC 384 DPCI - Quizzes are peer reviewed.
+DSC 385 VIZ - All assignments are peer reviewed.
 DSC 391L ML - All assignments are peer reviewed.
 DSC 395T DL - <Does anyone know?>
-DSC 395T DSA - TBD
+DSC 395T DSA - All projects have a peer review component but are also ran against a grader.
 DSC 395T NLP - <Does anyone know?>
-DSC 395T OPT - TBD
+DSC 395T OPT - All assignments are peer reviewed.
 ```
 
 ```fix
