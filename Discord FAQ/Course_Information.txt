@@ -7,7 +7,7 @@ What language is used in XYZ course?
 ```
 DSC 381 PRB - R samples offered, but no programming needed/submitted
 DSC 382 RGR - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
-DSC 383 PRED - R for first half; Python for second half
+DSC 383 PRED - Primarily R-based, but may use others if viable.
 DSC 384 DPCI - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
 DSC 385 VIZ - R
 DSC 391L ML - Python
