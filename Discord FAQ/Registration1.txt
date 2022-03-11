@@ -32,5 +32,12 @@ Where do I pay for my classes?
 Where can I get an unofficial transcript/record?
 ```
 > https://onestop.utexas.edu/student-records/transcripts-other-records/unofficial-records/
+
+
+```fix
+How do we access 1098-T tax information for the program?
+```
+> https://utdirect.utexas.edu/acct/rec/irs1098t/index.WBX
+
 "
 
