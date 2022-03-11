@@ -1,0 +1,18 @@
+MSDSO: edit 939367350061367396 951904053217075200 "**Getting Started with R:**
+
+For those new to R, please also install the following:
+- https://www.r-project.org/ 
+- https://www.rstudio.com/
+If you need further assistance, there is more detailed install instructions in the book resources below. If you are still stuck on any details feel free to ask here for assistance.
+
+**Book Resources**: 
+Hands on Programming with R - https://rstudio-education.github.io/hopr/
+Data Visualization - https://socviz.co/
+R for Data Science - https://r4ds.had.co.nz/index.html
+RMarkdown Cookbook - https://bookdown.org/yihui/rmarkdown-cookbook/
+Graphical Data Analysis with R -  http://www.gradaanwr.net/
+
+**Community Resources**: 
+- https://community.rstudio.com/"
+
+
