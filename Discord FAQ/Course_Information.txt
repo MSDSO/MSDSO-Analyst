@@ -7,7 +7,7 @@ What language is used in XYZ course?
 ```
 DSC 381 PRB - R samples offered, but no programming needed/submitted
 DSC 382 RGR - See (1) below
-DSC 383 PRED - Primarily R-based, but may use others if viable.
+DSC 383 PRED - First half of course is R, second half is python
 DSC 384 DPCI - See (1) below
 DSC 385 VIZ - R
 DSC 391L ML - Python
@@ -15,6 +15,7 @@ DSC 395T DL - Python
 DSC 395T DSA - Python
 DSC 395T NLP - Python
 DSC 395T OPT - No programming assignments
+DSC 395T RL - <TBD>
 (1) - R samples offered, but at least one assignment has suggested R, Python, or other are viable; so far no code submissions.
 ```
 
@@ -29,21 +30,10 @@ DSC 383 PRED - Yes
 DSC 384 DPCI - Quizzes are peer reviewed.
 DSC 385 VIZ - All assignments are peer reviewed.
 DSC 391L ML - All assignments are peer reviewed.
-DSC 395T DL - <Does anyone know?>
+DSC 395T DL - No
 DSC 395T DSA - All projects have a peer review component but are also ran against a grader.
-DSC 395T NLP - <Does anyone know?>
+DSC 395T NLP - Only peer grading on final project, though previously mentioned this is subject to change.
 DSC 395T OPT - All assignments are peer reviewed.
+DSC 395T RL - <TBD>
 ```
-
-```fix
-Which classes are good to take first?  What about prerequisites?
-```
-> Depends on background and workload. See the course flow from the program coordinator. Prerequisites have not been strictly enforced.
-
-
-```fix
-What are people's impressions of XYZ course?
-```
-> Look at the reviews on https://www.msdshub.com/ to see what former students have said about the course. Please contribute to the reviews as well after you've finished taking the courses to help future students.
-
-------------------------------------------"
+"

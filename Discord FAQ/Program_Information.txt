@@ -1,16 +1,28 @@
 MSDSO: edit 851535255080271951 855846351433629697 "**__Program Information__**
 
+
 ```fix
 Do we have any indication as to the cohort sizes for either the MSCS or MSDS programs?
 ```
-> The MSDS program is still too new, but should have information updated in the future. Cohort sizes from MSCS have been published by UT: 
 > - https://gradschool.utexas.edu/admissions/where-to-begin/admissions-and-enrollment-statistics
+> The site has been unavailable for some time, but the following information was retrieved previously:
+>
+> **MSDS S/Fall 2021: (2204 applicants. 689 admitted. 437 enrolled)**
+>
+> **For all applicants**
+> Average GPA (only 1256 applicants included)  3.39
+> Average GRE (only 155 applicants submitted their score): V - 158; Q - 163; W - 4.0; Total - 320
+>
+> **For admitted applicants**
+> Average GPA: 3.61
+> Average GRE: V - 159, Q - 165, Total - 324
 
 
 ```fix
 Is there a thesis option for this program?
 ```
 > Currently no, per the Student Handbook in the section titled 'DEGREE REQUIREMENTS'
+> If thesis is important to you, consider whether MSCSO is applicable to your goals
 
 
 ```fix
