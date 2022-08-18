@@ -114,6 +114,7 @@ reaction_role_dict = {
     "2️⃣": 802795502126891040, # Fall 2021 Cohort
     "3️⃣": 809871306442145872, # Spring 2022 Cohort
     "4️⃣": 809871233034354758, # Fall 2022 Cohort
+    "5️⃣": 1009893820537765908, # Spring 2023 Cohort
     # class access role
     "💭": 809847471962193920, # DSC 383 Advanced Predictive Models
     "💻": 809847762081284117, # DSC 388G Algorithms: Techniques And Theory
@@ -124,7 +125,8 @@ reaction_role_dict = {
     "🧮": 809848511423053825, # DSC 395T Optimization
     "🤖": 809848769809088543, # DSC 391L Principles Of Machine Learning
     "📊": 809848917653979226, # DSC 381 Probability & Inference
-    "📈": 809849489891393580  # DSC 382 Regression & Predictive Modeling
+    "📈": 809849489891393580, # DSC 382 Regression & Predictive Modeling
+    "♾️": 1009894629426085998 # DSC 395T Reinforcement learning
 }
 
 @bot.event
@@ -150,5 +152,5 @@ async def on_raw_reaction_remove(payload):
         await member.remove_roles(role)
 
 # server OAuth2 key
-from private.config import TOKEN 
+from private.config import TOKEN
 bot.run(TOKEN)
