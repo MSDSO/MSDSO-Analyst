@@ -38,3 +38,4 @@ config.py
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+/private.py
