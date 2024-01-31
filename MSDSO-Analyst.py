@@ -116,14 +116,16 @@ reaction_role_dict = {
     "🕵️": 802765865048604673,  # Visitor",
     "MSCSO": 802765732055220244,  # MSCSO Student
     "MSDSO": 773281658555990023,  # Admitted Student
+    "MSAI": 1195071638371323984, # MSAI Studnet
     "👀": 773281343823675422,  # Prospective Student
     # cohort role
     "1️⃣": 773282104657838101,  # Spring 2021 Cohort
     "2️⃣": 802795502126891040,  # Fall 2021 Cohort
     "3️⃣": 809871306442145872,  # Spring 2022 Cohort
     "4️⃣": 809871233034354758,  # Fall 2022 Cohort
-    "5️⃣": 1009893820537765908,  # Spring 2023 Cohort
-    "6️⃣": 1142836338421399622,  # Fall 2023 Cohort
+    "5️⃣": 1009893820537765908, # Spring 2023 Cohort
+    "6️⃣": 1142836338421399622, # Fall 2023 Cohort
+    "7️⃣":1195071341976616970,  # Spring 2024 Cohort
     # class access role
     "💭": 809847471962193920,  # DSC 383 Advanced Predictive Models
     "💻": 809847762081284117,  # DSC 388G Algorithms: Techniques And Theory
@@ -135,7 +137,8 @@ reaction_role_dict = {
     "🤖": 809848769809088543,  # DSC 391L Principles Of Machine Learning
     "📊": 809848917653979226,  # DSC 381 Probability & Inference
     "📈": 809849489891393580,  # DSC 382 Regression & Predictive Modeling
-    "♾️": 1009894629426085998  # DSC 395T Reinforcement learning
+    "♾️": 1009894629426085998, # DSC 395T Reinforcement learning
+    "⚕️": 1195059132668072048  # DSC 395T Data Science for Health Discovery & Innovation
 }
 
 
