@@ -18,6 +18,19 @@ In the Discord developer portal, the bot needs the **Server Members** privileged
 Manage Roles, Manage Messages, Read Message History, and Add Reactions permissions, and its role must sit above any
 role it hands out.
 
+## Docker
+Every push to `main` publishes `ghcr.io/msdso/msdso-analyst:latest` (plus a `sha-<commit>` tag). Pushing a `v*` tag
+also publishes version tags, e.g. `v2.0.0` → `2.0.0` and `2.0`. Pull requests build the image without publishing it.
+
+To run on a server, put `DISCORD_TOKEN=...` in a `.env` next to [`compose.yaml`](compose.yaml), then:
+
+```sh
+docker compose pull && docker compose up -d
+```
+
+`config/server.toml` is baked into the image. To change it without rebuilding, mount your own copy:
+`-v ./server.toml:/app/config/server.toml:ro`.
+
 ## Configuration
 Server IDs (guild, moderator roles, reaction-role messages, emoji → role mapping) live in
 [`config/server.toml`](config/server.toml). To add a new cohort or course:

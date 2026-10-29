@@ -1,0 +1,8 @@
+services:
+  bot:
+    image: ghcr.io/msdso/msdso-analyst:latest
+    build: .
+    env_file: .env
+    # /status reports "remote AWS" when the hostname matches.
+    hostname: MSDSO-AWS
+    restart: unless-stopped
