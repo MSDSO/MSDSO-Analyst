@@ -34,7 +34,7 @@ Thumbs.db
 
 # Folder config file
 [Dd]esktop.ini
-config.py
+/config.py
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
