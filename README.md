@@ -23,8 +23,10 @@ Manage Roles, Send Messages, Manage Messages, and Read Message History permissio
 role it hands out.
 
 ## Docker
-Every push to `main` publishes `ghcr.io/msdso/msdso-analyst:latest` (plus a `sha-<commit>` tag). Pushing a `v*` tag
-also publishes version tags, e.g. `v2.0.0` → `2.0.0` and `2.0`. Pull requests build the image without publishing it.
+Every push to `main` (i.e. every merged PR) publishes `ghcr.io/msdso/msdso-analyst:stable`, which is what
+[`compose.yaml`](compose.yaml) runs, plus a `sha-<commit>` tag. Pushes to `test/**` branches publish a tag named after
+the branch (e.g. `test-docker-ci`) and never touch `stable`. Pushing a `v*` tag also publishes version tags, e.g.
+`v2.0.0` → `2.0.0` and `2.0`. Pull requests build the image without publishing it. No `latest` tag is published.
 
 To run on a server, put `DISCORD_TOKEN=...` in a `.env` next to [`compose.yaml`](compose.yaml), then:
 
