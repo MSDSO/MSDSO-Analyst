@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 DEFAULT_CONFIG_PATH = Path("config/server.toml")
+DEFAULT_DB_PATH = Path("data/msdso.db")
 
 
 class ConfigError(Exception):
@@ -13,17 +14,29 @@ class ConfigError(Exception):
 
 
 @dataclass(frozen=True)
+class RoleGroupSeed:
+    """A role group to create the first time the bot starts with an empty database."""
+
+    name: str
+    description: str
+    max_choices: int
+    roles: tuple[tuple[int, str | None], ...]  # (role ID, emoji)
+
+
+@dataclass(frozen=True)
 class ServerConfig:
     guild_id: int
     moderator_role_ids: frozenset[int]
-    reaction_role_message_ids: frozenset[int]
-    reaction_roles: dict[str, int]
+    role_group_seeds: tuple[RoleGroupSeed, ...] = ()
 
-    def role_for_reaction(self, message_id: int, emoji_name: str | None) -> int | None:
-        """Role ID granted by reacting with ``emoji_name`` on ``message_id``, or None if not a role reaction."""
-        if message_id not in self.reaction_role_message_ids or emoji_name is None:
-            return None
-        return self.reaction_roles.get(emoji_name)
+
+def _parse_role_group(raw: dict) -> RoleGroupSeed:
+    return RoleGroupSeed(
+        name=str(raw["name"]),
+        description=str(raw.get("description", "")),
+        max_choices=int(raw.get("max_choices", 0)),
+        roles=tuple((int(r["id"]), r.get("emoji")) for r in raw.get("roles", [])),
+    )
 
 
 def load_server_config(path: Path | str = DEFAULT_CONFIG_PATH) -> ServerConfig:
@@ -37,8 +50,7 @@ def load_server_config(path: Path | str = DEFAULT_CONFIG_PATH) -> ServerConfig:
         return ServerConfig(
             guild_id=int(raw["guild_id"]),
             moderator_role_ids=frozenset(int(i) for i in raw.get("moderator_role_ids", [])),
-            reaction_role_message_ids=frozenset(int(i) for i in raw.get("reaction_role_message_ids", [])),
-            reaction_roles={str(k): int(v) for k, v in raw.get("reaction_roles", {}).items()},
+            role_group_seeds=tuple(_parse_role_group(g) for g in raw.get("role_groups", [])),
         )
     except KeyError as e:
         raise ConfigError(f"Missing required key {e} in {path}") from e

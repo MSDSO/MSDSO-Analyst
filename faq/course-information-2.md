@@ -1,5 +1,7 @@
-MSDSO: edit 851535255080271951 860203323608268812 "
-
++++
+channel_id = 851535255080271951
+message_id = 860203323608268812
++++
 ```fix
 Which classes are good to take first?  What about prerequisites?
 ```
@@ -12,4 +14,4 @@ What are people's impressions of XYZ course?
 > Look at the reviews on https://www.msdshub.com/ to see what former students have said about the course. 
 > Please contribute to the reviews as well after you've finished taking the courses to help future students.
 
-------------------------------------------"
+------------------------------------------

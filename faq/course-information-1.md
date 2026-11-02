@@ -1,4 +1,8 @@
-MSDSO: edit 851535255080271951 860203213809778749 "**__Course Related Information__**
++++
+channel_id = 851535255080271951
+message_id = 860203213809778749
++++
+**__Course Related Information__**
 
 ```fix
 What language is used in XYZ course?
@@ -36,4 +40,3 @@ DSC 395T NLP - Only peer grading on final project, though previously mentioned t
 DSC 395T OPT - All assignments are peer reviewed.
 DSC 395T RL - <TBD>
 ```
-"

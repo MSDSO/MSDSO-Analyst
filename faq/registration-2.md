@@ -1,5 +1,7 @@
-MSDSO: edit 851535255080271951 855846570778820618 "
-
++++
+channel_id = 851535255080271951
+message_id = 855846570778820618
++++
 ```fix
 Is there a wait time between repeating a class?
 ```
@@ -7,5 +9,3 @@ Is there a wait time between repeating a class?
 > - If they QF drop a course after the 20th class day, they will need to wait two long semesters.
 
 ------------------------------------------
-"
-

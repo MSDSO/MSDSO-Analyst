@@ -5,7 +5,8 @@ import disnake
 import pytest
 from disnake.ext import commands
 
-from msdso_analyst.cogs.admin import Admin, is_moderator, machine_type
+from msdso_analyst.cogs.admin import Admin, machine_type
+from msdso_analyst.cogs.common import is_moderator
 from tests.conftest import MOD_ROLE_ID, http_error, last_reply
 
 

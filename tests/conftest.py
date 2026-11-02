@@ -5,10 +5,9 @@ import disnake
 import pytest
 
 from msdso_analyst.config import ServerConfig
+from msdso_analyst.storage import Storage
 
 MOD_ROLE_ID = 111
-ROLE_MESSAGE_ID = 222
-VISITOR_ROLE_ID = 333
 
 
 @pytest.fixture
@@ -16,15 +15,21 @@ def config() -> ServerConfig:
     return ServerConfig(
         guild_id=1,
         moderator_role_ids=frozenset({MOD_ROLE_ID}),
-        reaction_role_message_ids=frozenset({ROLE_MESSAGE_ID}),
-        reaction_roles={"🕵️": VISITOR_ROLE_ID},
     )
 
 
 @pytest.fixture
-def bot(config):
+def storage():
+    storage = Storage(":memory:")
+    yield storage
+    storage.close()
+
+
+@pytest.fixture
+def bot(config, storage):
     bot = MagicMock()
     bot.config = config
+    bot.storage = storage
     bot.user = SimpleNamespace(id=999, name="MSDSO Analyst")
     bot.is_owner = AsyncMock(return_value=False)
     bot.close = AsyncMock()

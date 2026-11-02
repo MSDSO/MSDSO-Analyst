@@ -6,3 +6,8 @@ services:
     # /status reports "remote AWS" when the hostname matches.
     hostname: MSDSO-AWS
     restart: unless-stopped
+    volumes:
+      - bot-data:/app/data
+
+volumes:
+  bot-data:

@@ -1,4 +1,8 @@
-MSDSO: edit 851535255080271951 855846351433629697 "**__Program Information__**
++++
+channel_id = 851535255080271951
+message_id = 855846351433629697
++++
+**__Program Information__**
 
 
 ```fix
@@ -36,4 +40,4 @@ How quickly can I graduate? Is it possible to finish in 1 year?
 ```
 > While theoretically you can, students will likely be bottle necked by class offerings per semester. Expect to take a minimum of 1.5 years to finish this program
 
-------------------------------------------"
+------------------------------------------

@@ -42,3 +42,6 @@ $RECYCLE.BIN/
 
 # Local secrets
 .env
+
+# Bot database (local runs)
+/data/

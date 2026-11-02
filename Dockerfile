@@ -20,8 +20,12 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 FROM python:3.13-slim
 RUN useradd --system --uid 10001 --no-create-home bot
 WORKDIR /app
+# Role groups, the role panel, and posted FAQ messages live here; mount a volume over it.
+RUN mkdir data && chown bot data
+VOLUME /app/data
 COPY --from=builder /app/.venv /app/.venv
 COPY config ./config
+COPY faq ./faq
 ENV PATH="/app/.venv/bin:$PATH" PYTHONUNBUFFERED=1
 USER bot
 # DISCORD_TOKEN must be provided at runtime. Mount a file over /app/config/server.toml
