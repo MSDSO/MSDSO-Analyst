@@ -11,22 +11,21 @@ def test_repo_config_loads():
     config = load_server_config(REPO_ROOT / DEFAULT_CONFIG_PATH)
     assert config.guild_id == 766782085041881120
     assert config.moderator_role_ids
-    assert len(config.reaction_role_message_ids) == 3
-    assert config.reaction_roles["MSDSO"] == 773281658555990023
-    assert config.reaction_roles["👀"] == 773281343823675422
+    groups = {g.name: g for g in config.role_group_seeds}
+    assert set(groups) == {"General", "Cohort", "Classes"}
+    assert groups["Cohort"].max_choices == 1
+    assert (773281658555990023, "MSDSO") in groups["General"].roles
+    role_ids = [role_id for g in config.role_group_seeds for role_id, _ in g.roles]
+    assert len(role_ids) == len(set(role_ids)) == 24
 
 
-def test_role_for_reaction(config):
-    assert config.role_for_reaction(222, "🕵️") == 333
-
-
-def test_role_for_reaction_ignores_other_messages(config):
-    assert config.role_for_reaction(12345, "🕵️") is None
-
-
-def test_role_for_reaction_ignores_unknown_emoji(config):
-    assert config.role_for_reaction(222, "🍕") is None
-    assert config.role_for_reaction(222, None) is None
+def test_role_group_defaults(tmp_path):
+    path = tmp_path / "server.toml"
+    path.write_text('guild_id = 5\n[[role_groups]]\nname = "Cohort"\nroles = [{ id = 7 }]\n')
+    (group,) = load_server_config(path).role_group_seeds
+    assert group.description == ""
+    assert group.max_choices == 0
+    assert group.roles == ((7, None),)
 
 
 def test_missing_file(tmp_path):
@@ -45,8 +44,8 @@ def test_optional_sections_default_empty(tmp_path):
     path = tmp_path / "server.toml"
     path.write_text("guild_id = 5\n")
     config = load_server_config(path)
-    assert config.reaction_roles == {}
-    assert config.role_for_reaction(1, "👀") is None
+    assert config.moderator_role_ids == frozenset()
+    assert config.role_group_seeds == ()
 
 
 def test_load_token(monkeypatch):

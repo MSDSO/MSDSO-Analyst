@@ -1,4 +1,8 @@
-MSDSO: edit 939367350061367396 951904053217075200 "**Getting Started with R:**
++++
+channel_id = 939367350061367396
+message_id = 951904053217075200
++++
+**Getting Started with R:**
 
 For those new to R, please also install the following:
 - https://www.r-project.org/ 
@@ -13,6 +17,4 @@ RMarkdown Cookbook - https://bookdown.org/yihui/rmarkdown-cookbook/
 Graphical Data Analysis with R -  http://www.gradaanwr.net/
 
 **Community Resources**: 
-- https://community.rstudio.com/"
-
-
+- https://community.rstudio.com/

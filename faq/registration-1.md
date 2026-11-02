@@ -1,4 +1,7 @@
-MSDSO: edit 851535255080271951 855846427703377930 "
++++
+channel_id = 851535255080271951
+message_id = 855846427703377930
++++
 **__Registration and Student Information__**
 
 
@@ -39,5 +42,3 @@ Where can I get an unofficial transcript/record?
 How do we access 1098-T tax information for the program?
 ```
 > https://utdirect.utexas.edu/acct/rec/irs1098t/index.WBX
-
-"
