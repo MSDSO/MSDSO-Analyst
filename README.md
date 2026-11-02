@@ -51,7 +51,8 @@ Moderators manage it with `/roles`:
 | Command | What it does |
 | --- | --- |
 | `/roles post channel:#roles` | Post the panel, deleting the previous one |
-| `/roles add group:Cohort role:@Fall 2026 Cohort emoji:🔟` | Make a role pickable (moves it if it's in another group) |
+| `/roles create group:Cohort name:Fall 2026 Cohort emoji:🔟` | Create a new role (no permissions) and make it pickable |
+| `/roles add group:Cohort role:@Fall 2026 Cohort emoji:🔟` | Make an existing role pickable (moves it if it's in another group) |
 | `/roles remove role:@...` | Stop offering a role; members who have it keep it |
 | `/roles new-group name:... max_choices:1 description:...` | Add a group (a button). `max_choices` 0 = any number |
 | `/roles delete-group group:...` | Remove a group; members keep their roles |

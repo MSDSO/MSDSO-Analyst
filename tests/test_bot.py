@@ -17,7 +17,7 @@ async def test_bot_loads_cogs(config, storage):
         names = {c.name for c in bot.slash_commands}
         assert names == {"status", "purge", "shutdown", "assign", "echo", "edit", "react_to_message", "roles", "faq"}
         roles = bot.get_slash_command("roles")
-        assert set(roles.children) == {"post", "list", "new-group", "delete-group", "add", "remove"}
+        assert set(roles.children) == {"post", "list", "new-group", "delete-group", "add", "create", "remove"}
         assert set(bot.get_slash_command("faq").children) == {"publish"}
     finally:
         await bot.close()
