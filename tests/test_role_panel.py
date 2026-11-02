@@ -175,7 +175,8 @@ class TestButton:
 class TestDropdown:
     def pick(self, inter, group, *roles):
         inter.component = SimpleNamespace(custom_id=f"{SET_PREFIX}{group.id}")
-        inter.values = [str(r.id) for r in roles]
+        # Like disnake, which turns an empty selection into None.
+        inter.values = [str(r.id) for r in roles] or None
 
     async def test_swaps_roles_to_match_selection(self, cog, cohort, component_inter, member):
         member.roles = [SPRING, NLP]

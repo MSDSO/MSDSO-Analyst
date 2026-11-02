@@ -157,7 +157,8 @@ class RolePanel(ModeratorCog):
             await inter.response.edit_message(content="That list no longer exists.", components=[])
             return
 
-        chosen = {int(v) for v in inter.values}
+        # disnake reports an emptied dropdown as None rather than [].
+        chosen = {int(v) for v in inter.values or []}
         if group.max_choices and len(chosen) > group.max_choices:
             await inter.response.edit_message(content=f"You can pick at most {group.max_choices}.", components=[])
             return
