@@ -63,6 +63,17 @@ def resolve_emoji(guild: disnake.Guild, emoji: str | None) -> disnake.PartialEmo
     return None if emoji.isascii() else emoji
 
 
+def parse_colour(value: str) -> disnake.Colour | None:
+    """A colour from hex like ``#1abc9c`` or ``1abc9c``, or None if it isn't one."""
+    value = value.strip().removeprefix("#")
+    if len(value) != 6:
+        return None
+    try:
+        return disnake.Colour(int(value, 16))
+    except ValueError:
+        return None
+
+
 def unsafe_reason(role: disnake.Role, bot_member: disnake.Member) -> str | None:
     """Why ``role`` can't be self-assignable, or None if it can."""
     if role.is_default() or role.managed:
@@ -291,23 +302,78 @@ class RolePanel(ModeratorCog):
         role: The role members can pick.
         emoji: Optional emoji shown next to it.
         """
-        found = self.storage.role_group_by_name(group)
+        found = await self._group_with_room(inter, group, emoji, role_id=role.id)
         if found is None:
-            await respond(inter, f"There's no group named **{group}**. Create it with `/roles new-group`.")
             return
         if reason := unsafe_reason(role, inter.guild.me):
             await respond(inter, reason)
             return
-        if emoji is not None and resolve_emoji(inter.guild, emoji) is None:
-            await respond(inter, f"`{emoji}` isn't an emoji I can use.")
-            return
-        already_here = any(gr.role_id == role.id for gr in found.roles)
-        if not already_here and len(found.roles) >= MAX_OPTIONS:
-            await respond(inter, f"**{found.name}** already has {MAX_OPTIONS} roles, Discord's limit for one list.")
-            return
         self.storage.add_role(found.id, role.id, emoji)
         await self.refresh_panel()
         await respond(inter, f"Added {role.mention} to **{found.name}**.")
+
+    @roles.sub_command(description="Create a new role and make it pickable from a group on the panel.")
+    async def create(
+        self,
+        inter: disnake.ApplicationCommandInteraction,
+        group: str,
+        name: commands.String[str, 1, 100],
+        emoji: str | None = None,
+        colour: str | None = None,
+    ):
+        """
+        Create a new role and make it pickable from a group on the panel.
+
+        Parameters
+        ----------
+        group: The group to add it to.
+        name: The new role's name, e.g. "Fall 2026 Cohort".
+        emoji: Optional emoji shown next to it.
+        colour: Optional hex colour, e.g. #1abc9c.
+        """
+        found = await self._group_with_room(inter, group, emoji)
+        if found is None:
+            return
+        if disnake.utils.get(inter.guild.roles, name=name) is not None:
+            await respond(inter, f"A role named **{name}** already exists. Use `/roles add` to put it on the panel.")
+            return
+        parsed_colour = None
+        if colour is not None and (parsed_colour := parse_colour(colour)) is None:
+            await respond(inter, f"`{colour}` isn't a hex colour like `#1abc9c`.")
+            return
+
+        try:
+            # No permissions: class roles get channel access from channel overrides, not from the role itself.
+            role = await inter.guild.create_role(
+                name=name,
+                permissions=disnake.Permissions.none(),
+                colour=parsed_colour or disnake.Colour.default(),
+                mentionable=False,
+                reason=f"/roles create by {inter.author}",
+            )
+        except disnake.Forbidden:
+            await respond(inter, "I don't have permission to create roles. I need Manage Roles.")
+            return
+        self.storage.add_role(found.id, role.id, emoji)
+        await self.refresh_panel()
+        await respond(inter, f"Created {role.mention} and added it to **{found.name}**.")
+
+    async def _group_with_room(
+        self, inter: disnake.ApplicationCommandInteraction, group: str, emoji: str | None, role_id: int | None = None
+    ) -> RoleGroup | None:
+        """The named group if a role with ``emoji`` can go in it; otherwise reply with why not and return None."""
+        found = self.storage.role_group_by_name(group)
+        if found is None:
+            await respond(inter, f"There's no group named **{group}**. Create it with `/roles new-group`.")
+            return None
+        if emoji is not None and resolve_emoji(inter.guild, emoji) is None:
+            await respond(inter, f"`{emoji}` isn't an emoji I can use.")
+            return None
+        already_here = any(gr.role_id == role_id for gr in found.roles)
+        if not already_here and len(found.roles) >= MAX_OPTIONS:
+            await respond(inter, f"**{found.name}** already has {MAX_OPTIONS} roles, Discord's limit for one list.")
+            return None
+        return found
 
     @roles.sub_command(description="Stop offering a role on the panel. Members who have it keep it.")
     async def remove(self, inter: disnake.ApplicationCommandInteraction, role: disnake.Role):
@@ -325,6 +391,7 @@ class RolePanel(ModeratorCog):
         await respond(inter, f"Removed {role.mention} from the panel.")
 
     @add.autocomplete("group")
+    @create.autocomplete("group")
     @delete_group.autocomplete("group")
     async def _group_names(self, inter: disnake.ApplicationCommandInteraction, current: str) -> list[str]:
         names = [g.name for g in self.storage.role_groups()]

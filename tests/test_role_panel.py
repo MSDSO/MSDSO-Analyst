@@ -10,11 +10,13 @@ from msdso_analyst.cogs.role_panel import (
     SET_PREFIX,
     RolePanel,
     panel_components,
+    parse_colour,
     parse_custom_id,
     resolve_emoji,
     role_select,
     unsafe_reason,
 )
+from msdso_analyst.storage import GroupRole
 from tests.conftest import http_error, last_reply
 
 
@@ -103,6 +105,13 @@ def test_resolve_emoji(guild):
     assert resolve_emoji(guild, "<:MSAI:123>") is None
     assert resolve_emoji(guild, "NotAnEmoji") is None
     assert resolve_emoji(guild, None) is None
+
+
+def test_parse_colour():
+    assert parse_colour("#1abc9c").value == 0x1ABC9C
+    assert parse_colour(" 1ABC9C ").value == 0x1ABC9C
+    assert parse_colour("#fff") is None
+    assert parse_colour("zzzzzz") is None
 
 
 def test_unsafe_reason(guild):
@@ -267,6 +276,59 @@ class TestCommands:
     async def test_add_refuses_bad_emoji(self, cog, cohort, cmd_inter, storage):
         await RolePanel.add.callback(cog, cmd_inter, group="Cohort", role=FakeRole(4), emoji="nope")
         assert len(storage.role_group(cohort.id).roles) == 2
+
+    @pytest.fixture
+    def creatable_guild(self, cmd_inter):
+        cmd_inter.guild.roles = [SPRING, FALL, NLP]
+        cmd_inter.guild.create_role = AsyncMock(return_value=FakeRole(4, "Fall 2026 Cohort"))
+        return cmd_inter.guild
+
+    async def test_create_role(self, cog, cohort, cmd_inter, creatable_guild, panel_channel, storage):
+        storage.set_setting(PANEL_SETTING, "700:800")
+        await RolePanel.create.callback(
+            cog, cmd_inter, group="Cohort", name="Fall 2026 Cohort", emoji="🔟", colour="#1abc9c"
+        )
+        kwargs = creatable_guild.create_role.call_args.kwargs
+        assert kwargs["name"] == "Fall 2026 Cohort"
+        assert kwargs["permissions"] == disnake.Permissions.none()
+        assert kwargs["colour"].value == 0x1ABC9C
+        assert kwargs["mentionable"] is False
+        assert storage.role_group(cohort.id).roles[-1] == GroupRole(4, "🔟")
+        panel_channel.fetch_message.return_value.edit.assert_awaited_once()
+        assert "Created <@&4> and added it to **Cohort**" in last_reply(cmd_inter)
+
+    async def test_create_without_colour(self, cog, cohort, cmd_inter, creatable_guild):
+        await RolePanel.create.callback(cog, cmd_inter, group="Cohort", name="New", emoji=None, colour=None)
+        assert creatable_guild.create_role.call_args.kwargs["colour"] == disnake.Colour.default()
+
+    @pytest.mark.parametrize(
+        ("kwargs", "error"),
+        [
+            ({"group": "Nope"}, "no group named"),
+            ({"name": "Fall 2025"}, "already exists"),
+            ({"emoji": "nope"}, "isn't an emoji"),
+            ({"colour": "teal"}, "isn't a hex colour"),
+        ],
+    )
+    async def test_create_validates_before_creating(self, cog, cohort, cmd_inter, creatable_guild, kwargs, error):
+        args = {"group": "Cohort", "name": "New", "emoji": None, "colour": None, **kwargs}
+        await RolePanel.create.callback(cog, cmd_inter, **args)
+        creatable_guild.create_role.assert_not_awaited()
+        assert error in last_reply(cmd_inter)
+
+    async def test_create_respects_option_limit(self, cog, cmd_inter, creatable_guild, storage):
+        group_id = storage.create_group("Big")
+        for i in range(25):
+            storage.add_role(group_id, 1000 + i)
+        await RolePanel.create.callback(cog, cmd_inter, group="Big", name="New", emoji=None, colour=None)
+        creatable_guild.create_role.assert_not_awaited()
+        assert "limit" in last_reply(cmd_inter)
+
+    async def test_create_without_permission(self, cog, cohort, cmd_inter, creatable_guild, storage):
+        creatable_guild.create_role.side_effect = http_error(disnake.Forbidden, 403)
+        await RolePanel.create.callback(cog, cmd_inter, group="Cohort", name="New", emoji=None, colour=None)
+        assert len(storage.role_group(cohort.id).roles) == 2
+        assert "Manage Roles" in last_reply(cmd_inter)
 
     async def test_add_unknown_group(self, cog, cmd_inter):
         await RolePanel.add.callback(cog, cmd_inter, group="Nope", role=FakeRole(4), emoji=None)
