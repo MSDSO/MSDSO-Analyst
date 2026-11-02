@@ -19,6 +19,19 @@ def machine_type(hostname: str) -> str:
     return "remote AWS" if hostname == AWS_HOSTNAME else "local"
 
 
+def assign_refusal(role: disnake.Role, author: disnake.Member, *, privileged: bool) -> str | None:
+    """Why ``author`` may not hand out ``role``, or None if they may.
+
+    Mirrors Discord's own rule: you can only assign roles below your highest role. Without this, any moderator could
+    use the bot (whose role sits high) to give themselves or a friend Administrator.
+    """
+    if role.is_default() or role.managed:
+        return f"{role.mention} is managed by Discord or an integration and can't be assigned by hand."
+    if not privileged and role >= author.top_role:
+        return f"You can only assign roles below your highest role, and {role.mention} isn't."
+    return None
+
+
 class Admin(ModeratorCog):
     @commands.slash_command(description="Show where the bot is running.", default_member_permissions=MOD_PERMISSIONS)
     async def status(self, inter: disnake.ApplicationCommandInteraction):
@@ -60,6 +73,12 @@ class Admin(ModeratorCog):
         member: The member to give the role to.
         role: The role to give.
         """
+        # The server owner and bot owner aren't limited by role order, as in Discord itself.
+        privileged = inter.author.id == inter.guild.owner_id or await self.bot.is_owner(inter.author)
+        if reason := assign_refusal(role, inter.author, privileged=privileged):
+            log.warning("Refused /assign of %s to %s by %s", role, member, inter.author)
+            await respond(inter, reason)
+            return
         try:
             await member.add_roles(role, reason=f"/assign by {inter.author}")
         except disnake.Forbidden:

@@ -5,7 +5,7 @@ import disnake
 import pytest
 from disnake.ext import commands
 
-from msdso_analyst.cogs.admin import Admin, machine_type
+from msdso_analyst.cogs.admin import Admin, assign_refusal, machine_type
 from msdso_analyst.cogs.common import is_moderator
 from tests.conftest import MOD_ROLE_ID, http_error, last_reply
 
@@ -80,21 +80,85 @@ async def test_shutdown_responds_then_closes(cog, bot, inter):
     bot.close.assert_awaited_once()
 
 
+class FakeRole:
+    def __init__(self, role_id, position, managed=False, default=False):
+        self.id = role_id
+        self.position = position
+        self.managed = managed
+        self.mention = f"<@&{role_id}>"
+        self._default = default
+
+    def is_default(self):
+        return self._default
+
+    def __ge__(self, other):
+        return self.position >= other.position
+
+
+MODERATOR = FakeRole(MOD_ROLE_ID, position=5)
+VISITOR = FakeRole(5, position=1)
+ADMINISTRATOR = FakeRole(6, position=9)
+
+
+class TestAssignRefusal:
+    def test_role_below_author_allowed(self):
+        assert assign_refusal(VISITOR, SimpleNamespace(top_role=MODERATOR), privileged=False) is None
+
+    @pytest.mark.parametrize("role", [ADMINISTRATOR, MODERATOR])
+    def test_role_at_or_above_author_refused(self, role):
+        assert "below your highest role" in assign_refusal(role, SimpleNamespace(top_role=MODERATOR), privileged=False)
+
+    def test_privileged_author_not_limited_by_order(self):
+        assert assign_refusal(ADMINISTRATOR, SimpleNamespace(top_role=MODERATOR), privileged=True) is None
+
+    @pytest.mark.parametrize("role", [FakeRole(7, 1, managed=True), FakeRole(1, 0, default=True)])
+    def test_managed_and_everyone_refused_even_for_owner(self, role):
+        assert "managed" in assign_refusal(role, SimpleNamespace(top_role=MODERATOR), privileged=True)
+
+
 class TestAssign:
-    async def test_assigns_role(self, cog, inter):
+    @pytest.fixture
+    def moderator(self, inter):
+        inter.author.top_role = MODERATOR
+        inter.author.roles = [MODERATOR]
+        inter.guild.owner_id = 1
+        return inter
+
+    @pytest.fixture
+    def member(self):
         member = MagicMock(mention="<@7>")
         member.add_roles = AsyncMock()
-        role = MagicMock(mention="<@&5>")
-        await Admin.assign.callback(cog, inter, member=member, role=role)
-        member.add_roles.assert_awaited_once()
-        assert member.add_roles.call_args.args == (role,)
-        assert last_reply(inter) == "Gave <@&5> to <@7>."
+        return member
 
-    async def test_reports_missing_permission(self, cog, inter):
-        member = MagicMock()
-        member.add_roles = AsyncMock(side_effect=http_error(disnake.Forbidden, 403))
-        await Admin.assign.callback(cog, inter, member=member, role=MagicMock(mention="<@&5>"))
-        assert "don't have permission" in last_reply(inter)
+    async def test_assigns_role(self, cog, moderator, member):
+        await Admin.assign.callback(cog, moderator, member=member, role=VISITOR)
+        member.add_roles.assert_awaited_once()
+        assert member.add_roles.call_args.args == (VISITOR,)
+        assert last_reply(moderator) == "Gave <@&5> to <@7>."
+
+    async def test_moderator_cannot_grant_administrator(self, cog, moderator, member):
+        await Admin.assign.callback(cog, moderator, member=member, role=ADMINISTRATOR)
+        member.add_roles.assert_not_awaited()
+        assert "below your highest role" in last_reply(moderator)
+
+    async def test_moderator_cannot_grant_own_role(self, cog, moderator, member):
+        await Admin.assign.callback(cog, moderator, member=member, role=MODERATOR)
+        member.add_roles.assert_not_awaited()
+
+    async def test_server_owner_can_grant_any_role(self, cog, moderator, member):
+        moderator.guild.owner_id = moderator.author.id
+        await Admin.assign.callback(cog, moderator, member=member, role=ADMINISTRATOR)
+        member.add_roles.assert_awaited_once()
+
+    async def test_bot_owner_can_grant_any_role(self, cog, bot, moderator, member):
+        bot.is_owner.return_value = True
+        await Admin.assign.callback(cog, moderator, member=member, role=ADMINISTRATOR)
+        member.add_roles.assert_awaited_once()
+
+    async def test_reports_missing_permission(self, cog, moderator, member):
+        member.add_roles.side_effect = http_error(disnake.Forbidden, 403)
+        await Admin.assign.callback(cog, moderator, member=member, role=VISITOR)
+        assert "don't have permission" in last_reply(moderator)
 
 
 class TestEdit:
